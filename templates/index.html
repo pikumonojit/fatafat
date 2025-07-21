@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kolkata Fatafat Predictions - Live Results & Analysis</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .current-round-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .round-status {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .round-time {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .prediction-main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .prediction-number-large {
+            font-size: 4rem;
+            font-weight: 900;
+            background: white;
+            color: #667eea;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+            50% { transform: scale(1.05); box-shadow: 0 15px 40px rgba(255,255,255,0.3); }
+        }
+
+        .prediction-details-main {
+            text-align: left;
+        }
+
+        .confidence-large {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .method-large {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .countdown {
+            font-size: 1.3rem;
+            font-weight: 600;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: inline-block;
+        }
+
+        .number-wise-card {
+            margin-bottom: 30px;
+        }
+
+        .number-predictions-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .number-prediction-item {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8f0ff 100%);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .number-prediction-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .number-prediction-item.top-prediction {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .number-prediction-item.high-probability {
+            border-color: #4CAF50;
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+        }
+
+        .number-prediction-item.medium-probability {
+            border-color: #FF9800;
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+        }
+
+        .number-prediction-item.low-probability {
+            border-color: #f44336;
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+        }
+
+        .prediction-number-display {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .number-prediction-item.top-prediction .prediction-number-display {
+            color: white;
+        }
+
+        .probability-percentage {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .probability-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .probability-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 3px;
+            transition: width 0.8s ease;
+        }
+
+        .number-prediction-item.top-prediction .probability-fill {
+            background: linear-gradient(90deg, #ffffff, #f0f0f0);
+        }
+
+        .probability-rank {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            font-weight: 500;
+        }
+
+        .prediction-factors {
+            font-size: 0.7rem;
+            opacity: 0.6;
+            margin-top: 5px;
+            line-height: 1.2;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .card-header i {
+            font-size: 1.5rem;
+            margin-right: 10px;
+            color: #667eea;
+        }
+
+        .card-header h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .predictions-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .prediction-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8f0ff 100%);
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .prediction-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            background: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .prediction-details {
+            flex: 1;
+            margin-left: 15px;
+        }
+
+        .prediction-time {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .prediction-method {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .confidence-bar {
+            width: 100px;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #0abde3);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .confidence-text {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8f0ff 100%);
+            border-radius: 10px;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: white;
+        }
+
+        .loading i {
+            font-size: 2rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .recent-results {
+            grid-column: 1 / -1;
+        }
+
+        .results-timeline {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+
+        .result-bubble {
+            min-width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .disclaimer {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .number-predictions-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .prediction-main {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .prediction-number-large {
+                font-size: 3rem;
+                width: 100px;
+                height: 100px;
+            }
+            
+            .prediction-details-main {
+                text-align: center;
+            }
+            
+            .prediction-number-display {
+                font-size: 2rem;
+            }
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: #4CAF50;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-bullseye"></i> Kolkata Fatafat Current Round</h1>
+            <p>Live Prediction Based on Historical Analysis</p>
+            <span class="live-indicator">
+                <span class="live-dot"></span>
+                LIVE
+            </span>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-primary" onclick="refreshPrediction()">
+                <i class="fas fa-sync-alt"></i> Refresh Prediction
+            </button>
+        </div>
+
+        <div class="loading" id="loading">
+            <i class="fas fa-spinner"></i>
+            <p>Analyzing patterns and generating predictions...</p>
+        </div>
+
+        <!-- Current Round Prediction -->
+        <div class="current-round-card" id="currentRound">
+            <!-- Current round prediction will be loaded here -->
+        </div>
+
+        <!-- Number-wise Predictions -->
+        <div class="card number-wise-card">
+            <div class="card-header">
+                <i class="fas fa-calculator"></i>
+                <h2>Number-wise Predictions for Current Round</h2>
+            </div>
+            <div class="number-predictions-grid" id="numberPredictions">
+                <!-- Number-wise predictions will be loaded here -->
+            </div>
+        </div>
+
+        <div class="info-grid">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar"></i>
+                    <h2>Quick Stats</h2>
+                </div>
+                <div class="stats-grid" id="statistics">
+                    <!-- Statistics will be loaded here -->
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-history"></i>
+                    <h2>Recent Trend</h2>
+                </div>
+                <div class="results-timeline" id="recentResults">
+                    <!-- Recent results will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="disclaimer">
+            <i class="fas fa-exclamation-triangle"></i>
+            <strong>Disclaimer:</strong> These predictions are for entertainment purposes only. 
+            Lottery games involve risk and past results do not guarantee future outcomes. 
+            Please play responsibly.
+        </div>
+    </div>
+
+    <script>
+        let refreshInterval;
+
+        // Load initial data
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCurrentPrediction();
+            loadNumberWisePredictions();
+            loadStatistics();
+            
+            // Auto-refresh every 30 seconds
+            refreshInterval = setInterval(() => {
+                loadCurrentPrediction();
+                loadNumberWisePredictions();
+                loadStatistics();
+            }, 30000);
+        });
+
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        async function loadCurrentPrediction() {
+            try {
+                const response = await fetch('/api/current-prediction');
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayCurrentPrediction(data.prediction);
+                } else {
+                    console.error('Error loading prediction:', data.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function loadNumberWisePredictions() {
+            try {
+                const response = await fetch('/api/number-wise-predictions');
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayNumberWisePredictions(data.number_wise_predictions);
+                } else {
+                    console.error('Error loading number-wise predictions:', data.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function loadStatistics() {
+            try {
+                const response = await fetch('/api/statistics');
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayStatistics(data.statistics);
+                } else {
+                    console.error('Error loading statistics:', data.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function displayCurrentPrediction(prediction) {
+            const container = document.getElementById('currentRound');
+            
+            const statusText = prediction.status === 'LIVE NOW' ? 
+                `🔴 LIVE NOW - Round ${prediction.draw_number}` : 
+                `⏰ NEXT ROUND - Round ${prediction.draw_number}`;
+            
+            const timeText = prediction.status === 'LIVE NOW' ? 
+                `Current Draw: ${prediction.target_time}` : 
+                `Next Draw: ${prediction.target_time}`;
+            
+            const countdownText = prediction.time_to_next ? 
+                `Time Remaining: ${prediction.time_to_next}` : 
+                'Draw in Progress';
+            
+            container.innerHTML = `
+                <div class="round-status">${statusText}</div>
+                <div class="round-time">${timeText}</div>
+                
+                <div class="prediction-main">
+                    <div class="prediction-number-large">${prediction.predicted_number}</div>
+                    <div class="prediction-details-main">
+                        <div class="confidence-large">${Math.round(prediction.confidence)}% Confidence</div>
+                        <div class="method-large">Top Prediction from Analysis</div>
+                        ${prediction.time_to_next ? `<div class="countdown">${countdownText}</div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        function displayNumberWisePredictions(numberWise) {
+            const container = document.getElementById('numberPredictions');
+            container.innerHTML = '';
+            
+            const probabilities = numberWise.probabilities;
+            const sortedPredictions = numberWise.sorted_predictions;
+            
+            // Create items for each number 0-9
+            for (let num = 0; num <= 9; num++) {
+                const probability = probabilities[num] || 0;
+                const rank = sortedPredictions.findIndex(item => item[0] === num) + 1;
+                
+                const item = document.createElement('div');
+                item.className = 'number-prediction-item';
+                
+                // Add special classes based on probability
+                if (rank === 1) {
+                    item.classList.add('top-prediction');
+                } else if (probability >= 15) {
+                    item.classList.add('high-probability');
+                } else if (probability >= 8) {
+                    item.classList.add('medium-probability');
+                } else {
+                    item.classList.add('low-probability');
+                }
+                
+                // Animation delay
+                item.style.animationDelay = `${num * 0.1}s`;
+                
+                item.innerHTML = `
+                    <div class="prediction-number-display">${num}</div>
+                    <div class="probability-percentage">${Math.round(probability)}%</div>
+                    <div class="probability-bar">
+                        <div class="probability-fill" style="width: ${probability}%"></div>
+                    </div>
+                    <div class="probability-rank">#${rank} Most Likely</div>
+                `;
+                
+                container.appendChild(item);
+            }
+        }
+
+        function displayStatistics(stats) {
+            const container = document.getElementById('statistics');
+            container.innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-number">${stats.total_draws_analyzed}</div>
+                    <div class="stat-label">Total Draws</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">${stats.most_frequent_number}</div>
+                    <div class="stat-label">Hot Number</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">${stats.least_frequent_number}</div>
+                    <div class="stat-label">Cold Number</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">${stats.recent_trend.length}</div>
+                    <div class="stat-label">Recent Trend</div>
+                </div>
+            `;
+            
+            // Display recent results
+            const recentContainer = document.getElementById('recentResults');
+            recentContainer.innerHTML = '';
+            
+            if (stats.recent_trend) {
+                stats.recent_trend.forEach(result => {
+                    const bubble = document.createElement('div');
+                    bubble.className = 'result-bubble';
+                    bubble.textContent = result;
+                    recentContainer.appendChild(bubble);
+                });
+            }
+        }
+
+        async function refreshPrediction() {
+            showLoading();
+            try {
+                await fetch('/api/refresh');
+                await loadCurrentPrediction();
+                await loadNumberWisePredictions();
+                await loadStatistics();
+            } catch (error) {
+                console.error('Error refreshing prediction:', error);
+            }
+            hideLoading();
+        }
+
+        // Add some visual effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add entrance animations
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>

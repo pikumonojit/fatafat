@@ -1,0 +1,68 @@
+============================================================
+KOLKATA FATAFAT HISTORICAL RESULTS ANALYSIS
+============================================================
+Analysis Date: 2025-07-21 11:26:09
+Total Results Analyzed: 1304
+
+NUMBER FREQUENCY ANALYSIS
+------------------------------
+Total Numbers Drawn: 2567
+Unique Numbers: 210
+
+Most Frequent Numbers:
+1. Number 0: 144 times (5.61%)
+2. Number 1: 143 times (5.57%)
+3. Number 3: 140 times (5.45%)
+4. Number 6: 130 times (5.06%)
+5. Number 2: 129 times (5.03%)
+
+Least Frequent Numbers:
+1. Number 557: 1 times (0.04%)
+2. Number 266: 1 times (0.04%)
+3. Number 449: 1 times (0.04%)
+4. Number 227: 1 times (0.04%)
+5. Number 339: 1 times (0.04%)
+
+PATTERN ANALYSIS
+--------------------
+Even Numbers: 1393 (54.3%)
+Odd Numbers: 1174 (45.7%)
+Consecutive Numbers Found: 0
+Repeated Numbers in Same Draw: 0
+
+TIME-BASED TRENDS
+--------------------
+Year 2020:
+  Total Draws: 121
+  Average Number: 178.11
+  Most Common Number: 8 (15 times)
+
+Year 2022:
+  Total Draws: 348
+  Average Number: 191.32
+  Most Common Number: 1 (42 times)
+
+Year 2023:
+  Total Draws: 349
+  Average Number: 176.61
+  Most Common Number: 2 (46 times)
+
+Year 2024:
+  Total Draws: 346
+  Average Number: 184.63
+  Most Common Number: 2 (40 times)
+
+Year 2025:
+  Total Draws: 140
+  Average Number: 181.06
+  Most Common Number: 3 (20 times)
+
+INSIGHTS AND RECOMMENDATIONS
+-----------------------------------
+🔥 Hot Numbers (Most Frequent): 0, 1, 3
+❄️  Cold Numbers (Least Frequent): 557, 266, 449
+
+⚠️  DISCLAIMER:
+This analysis is for educational purposes only.
+Past results do not guarantee future outcomes.
+Lottery games involve risk - play responsibly.

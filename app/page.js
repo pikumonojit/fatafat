@@ -28,9 +28,9 @@ export default async function Home() {
   const { data: results, error } = await supabase.from('results').select('id,result_date,round_number,round_name,result_time,result,status').eq('status', 'published').order('result_date', { ascending: false }).order('round_number')
   const grouped = groupByDate(results || [])
   const today = indiaToday()
-  const dates = Object.keys(grouped)
+  const dates = Object.keys(grouped).filter((d) => d <= today)
   const todayRows = grouped[today] || Array(8).fill(null)
-  const oldDates = dates.filter((d) => d !== today).slice(0, 5)
+  const oldDates = dates.filter((d) => d !== today).slice(0, 30)
 
   return <main className="page">
     <header className="topbar"><div className="top-inner"><a className="logo" href="/"><span className="crown">♛</span><span><b>MATKA KING <em>FATAFAT</em></b><small>FAST&nbsp;&nbsp;|&nbsp;&nbsp;CLEAR&nbsp;&nbsp;|&nbsp;&nbsp;INFORMATION</small></span></a><nav><a className="active" href="/">Home</a><a href="#today">Today Result</a><a href="#old">Old Result</a><a href="#patti">Patti List</a><a href="#chart">Chart</a><a href="#about">About</a><a href="#contact">Contact</a><a className="admin-link" href="/admin">🔒 Admin Login</a></nav></div></header>
@@ -40,8 +40,7 @@ export default async function Home() {
       <aside className="sidebar"><div className="side-menu"><a className="selected" href="/">⌂ <span>Home</span></a><a href="#today">▣ <span>Today Result</span></a><a href="#old">◷ <span>Old Result</span></a><a href="#patti">☷ <span>Patti List</span></a><a href="#chart">▥ <span>Chart</span></a><a href="#about">ⓘ <span>About Us</span></a><a href="#contact">✉ <span>Contact Us</span></a></div><div className="side-card" id="chart"><h3>◷ GAME TIMINGS</h3>{defaultTimes.map((time, i) => <div className="timing" key={time}><span>Bazi {i + 1}</span><b>{time}</b></div>)}</div><div className="side-card responsible"><div className="side-crown">♛</div><div><h3>INFORMATION ONLY</h3><p>Results are provided for informational purposes.</p></div></div></aside>
       <main className="main-column">
         <section className="panel today-panel" id="today"><div className="panel-title"><span>▣ &nbsp; TODAY'S RESULT</span><b>{formatDate(today)}</b></div>{error ? <div className="empty">Unable to load results right now.</div> : <ClassicResult date={today} rows={todayRows} today />}</section>
-        <section className="panel recent-panel" id="old"><div className="section-heading"><span>▥ &nbsp; RECENT RESULTS</span><a href="#old-all">View All →</a></div><div className="old-result-list">{oldDates.map(date => <div className="old-result-item" key={date}><ClassicResult date={date} rows={grouped[date]} /></div>)}</div></section>
-        <section className="panel old-results" id="old-all"><div className="section-heading"><span>◷ &nbsp; OLD RESULTS</span></div>{dates.slice(6).map(date => <div className="old-day" key={date}><b>{formatDate(date)}</b><span>{grouped[date].filter(Boolean).map(r => r.result).join('  |  ')}</span></div>)}</section>
+        <section className="panel recent-panel" id="old"><div className="section-heading"><span>▥ &nbsp; ONE MONTH RESULTS</span><b>{oldDates.length} previous result days</b></div><div className="old-result-list">{oldDates.map(date => <div className="old-result-item" key={date}><ClassicResult date={date} rows={grouped[date]} /></div>)}</div></section>
       </main>
       <aside className="rightbar"><div className="quick panel" id="patti"><div className="quick-title">🔗 QUICK LINKS</div><a href="#today">▣ &nbsp; Today Result</a><a href="#old">◷ &nbsp; Old Result</a><a href="#patti">☷ &nbsp; Patti List</a><a href="#chart">▥ &nbsp; Game Chart</a></div><div className="right-notice"><h3>🔔 NOTICE</h3><ul><li>Results are updated when published.</li><li>This website is for informational purposes only.</li><li>No gambling, betting or wagering services are offered.</li><li>Please use information responsibly.</li></ul></div><div className="brand-card"><div>♛</div><b>MATKA KING<br/><span>FATAFAT</span></b><small>FAST • CLEAR • INFORMATION</small></div></aside>
     </div>

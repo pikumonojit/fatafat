@@ -13,6 +13,12 @@ function indiaToday() {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(new Date())
 }
 
+function pattiSingleDigit(value) {
+  const digits = String(value || '').replace(/\D/g, '')
+  if (digits.length !== 3) return '—'
+  return String(digits.split('').reduce((sum, digit) => sum + Number(digit), 0) % 10)
+}
+
 function groupByDate(results) {
   const groups = {}
   for (const row of results) {
@@ -39,7 +45,7 @@ export default async function Home() {
           <div className="result-date">{formatDate(date)}{date === today ? <span className="today-badge">TODAY</span> : null}</div>
           <div className="result-table">
             <div className="result-row result-numbers">{rows.map((row, i) => <div className="result-cell" key={`n-${i}`}>{row?.result || '—'}</div>)}</div>
-            <div className="result-row result-single">{rows.map((row, i) => <div className="result-cell" key={`s-${i}`}>{row?.result ? row.result.slice(-1) : '—'}</div>)}</div>
+            <div className="result-row result-single">{rows.map((row, i) => <div className="result-cell" key={`s-${i}`}>{pattiSingleDigit(row?.result)}</div>)}</div>
           </div>
           <div className="result-times">{rows.map((row, i) => <div key={i}>{row?.result_time || ''}</div>)}</div>
         </div>

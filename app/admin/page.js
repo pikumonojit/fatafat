@@ -3,18 +3,24 @@
 import { useEffect, useState } from 'react'
 import { createClient } from '@supabase/supabase-js'
 
-const supabase = createClient('https://pselksqspkulqkfrnioi.supabase.co', 'sb_publishable_Gzhnv-usyah1tQXENwrIhQ_L_uAWYz_')
+const supabase = createClient('https://pselksqspkulqkfrnioi.supabase.co', process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY)
 
 const rounds = [
   { number: 1, name: 'Morning' }, { number: 2, name: 'Noon' }, { number: 3, name: 'Afternoon' }, { number: 4, name: 'Evening' },
   { number: 5, name: 'Night' }, { number: 6, name: 'Late Night' }, { number: 7, name: 'Special 1' }, { number: 8, name: 'Special 2' },
 ]
 
+function pattiSingleDigit(value) {
+  const digits = String(value || '').replace(/\D/g, '')
+  if (digits.length !== 3) return ''
+  return String(digits.split('').reduce((sum, digit) => sum + Number(digit), 0) % 10)
+}
+
 export default function AdminPage() {
   const [session, setSession] = useState(null)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [date, setDate] = useState(new Date().toISOString().slice(0, 10))
+  const [date, setDate] = useState(new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' }))
   const [rows, setRows] = useState(rounds.map((r) => ({ ...r, result: '', result_time: '' })))
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
@@ -44,5 +50,5 @@ export default function AdminPage() {
 
   if (!session) return <main className="page"><section className="card admin-login"><h1>Admin Login</h1><p className="muted">Sign in to publish informational daily results.</p><form onSubmit={login} className="admin-form"><input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required /><input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required /><button type="submit" disabled={loading}>{loading ? 'Signing in…' : 'Sign in'}</button></form>{message && <p className="status">{message}</p>}</section></main>
 
-  return <main className="page"><header><div className="brand">MATKA KING <span>FATAFAT</span></div><nav><a href="/">Public Site</a><button className="link-button" onClick={logout}>Logout</button></nav></header><section className="hero"><p>ADMIN PANEL</p><h1>Publish Daily Results</h1><div className="date">Informational results only — no betting or wagering.</div></section><section className="card"><div className="cardhead"><h2>Results</h2><input type="date" value={date} onChange={(e) => setDate(e.target.value)} /></div><div className="admin-grid">{rows.map((row, i) => <div className="admin-row" key={row.number}><div><b>{row.name}</b><small>Round {row.number}</small></div><input placeholder="Result" value={row.result} onChange={(e) => setRows(rows.map((x, j) => j === i ? { ...x, result: e.target.value } : x))} /><input placeholder="Time" value={row.result_time} onChange={(e) => setRows(rows.map((x, j) => j === i ? { ...x, result_time: e.target.value } : x))} /></div>)}</div><button className="publish-button" onClick={publish} disabled={loading}>{loading ? 'Publishing…' : 'Publish Results'}</button>{message && <p className="status">{message}</p>}</section></main>
+  return <main className="page"><header><div className="brand">MATKA KING <span>FATAFAT</span></div><nav><a href="/">Public Site</a><button className="link-button" onClick={logout}>Logout</button></nav></header><section className="hero"><p>ADMIN PANEL</p><h1>Publish Daily Results</h1><div className="date">Informational results only — no betting or wagering.</div></section><section className="card"><div className="cardhead"><h2>Results</h2><input type="date" value={date} onChange={(e) => setDate(e.target.value)} /></div><div className="admin-grid">{rows.map((row, i) => <div className="admin-row" key={row.number}><div><b>{row.name}</b><small>Round {row.number}</small></div><input placeholder="3-digit Patti" inputMode="numeric" maxLength={3} value={row.result} onChange={(e) => setRows(rows.map((x, j) => j === i ? { ...x, result: e.target.value.replace(/\D/g, '').slice(0, 3) } : x))} /><div className="single-preview"><small>Single Digit</small><strong>{pattiSingleDigit(row.result) || '—'}</strong></div><input placeholder="Time" value={row.result_time} onChange={(e) => setRows(rows.map((x, j) => j === i ? { ...x, result_time: e.target.value } : x))} /></div>)}</div><p className="muted">Single digit is calculated automatically from the 3-digit Patti.</p><button className="publish-button" onClick={publish} disabled={loading}>{loading ? 'Publishing…' : 'Publish Results'}</button>{message && <p className="status">{message}</p>}</section></main>
 }

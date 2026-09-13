@@ -4,7 +4,7 @@ export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 const supabase = createClient('https://pselksqspkulqkfrnioi.supabase.co', process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY)
-const defaultTimes = ['10:00 AM','11:30 AM','01:00 PM','02:30 PM','04:00 PM','05:30 PM','07:00 PM','08:30 PM']
+const defaultTimes = ['10:30 AM','12:00 PM','01:30 PM','03:00 PM','04:30 PM','06:00 PM','07:30 PM','09:00 PM']
 const pattiRows = [
   ['100','200','300','400','500','600','700','800','900','000'],
   ['678','345','120','789','456','123','890','567','234','127'],

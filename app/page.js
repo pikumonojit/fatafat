@@ -44,7 +44,7 @@ function ClassicResult({ date, rows, today = false }) {
     <div className="classic-head">{cells.map((_, i) => <div key={i}>{i + 1}</div>)}</div>
     <div className="classic-numbers">{cells.map((row, i) => <div key={i}>{row?.result || '—'}</div>)}</div>
     <div className="classic-single">{cells.map((row, i) => <div key={i}>{pattiSingleDigit(row?.result)}</div>)}</div>
-    <div className="classic-times">{cells.map((row, i) => <div key={i}>{row?.result_time || defaultTimes[i]}</div>)}</div>
+    <div className="classic-times">{cells.map((row, i) => <div key={i}>{defaultTimes[i]}</div>)}</div>
   </div>
 }
 

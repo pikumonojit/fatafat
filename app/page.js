@@ -70,10 +70,21 @@ export default async function Home() {
   const todayRows = grouped[today] || Array(8).fill(null)
   const oldDates = dates.filter((d) => d !== today).slice(0, 30)
 
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Matka King Fatafat',
+    url: 'https://matkakingfatafat-bice.vercel.app',
+    description: 'Published daily and historical result information and game timing information.',
+    inLanguage: 'en-IN'
+  }
+
   return <main className="page">
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
     <header className="topbar"><div className="top-inner"><a className="logo" href="/"><span className="crown">♛</span><span><b>MATKA KING <em>FATAFAT</em></b><small>FAST&nbsp;&nbsp;|&nbsp;&nbsp;CLEAR&nbsp;&nbsp;|&nbsp;&nbsp;INFORMATION</small></span></a><nav><a className="active" href="/">Home</a><a href="#today">Today Result</a><a href="#old">Old Result</a><a href="#patti-list">Patti List</a><a href="#chart">Chart</a><a href="#about">About</a><a href="#contact">Contact</a></nav></div></header>
     <section className="hero-banner"><img className="hero-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Howrah_Bridge_at_Night.jpg/1280px-Howrah_Bridge_at_Night.jpg" alt="Howrah Bridge at night in Kolkata"/><div className="hero-overlay"></div><div className="hero-city left">✦ ✦ ✦</div><div className="hero-copy"><div className="welcome">WELCOME TO</div><h1>MATKA KING FATAFAT</h1><div className="ribbon">DAILY PUBLISHED RESULTS</div><div className="hero-note">Information only • No betting or wagering services</div></div><div className="hero-city right">✦ ✦ ✦</div></section>
     <section className="notice-strip">👉 Results are published for information only. This website does not provide betting, wagering, deposits or payment services.</section>
+    <section className="seo-intro" aria-labelledby="about-results"><h2 id="about-results">Matka King Fatafat Daily Results</h2><p>Matka King Fatafat provides a simple reference for published daily results, previous result records, result timing information and a Patti List. Results are displayed by date and round so visitors can quickly review published information.</p></section>
     <div className="dashboard">
       <aside className="sidebar"><div className="side-menu"><a className="selected" href="/">⌂ <span>Home</span></a><a href="#today">▣ <span>Today Result</span></a><a href="#old">◷ <span>Old Result</span></a><a href="#patti-list">☷ <span>Patti List</span></a><a href="#chart">▥ <span>Chart</span></a><a href="#about">ⓘ <span>About Us</span></a><a href="#contact">✉ <span>Contact Us</span></a></div><div className="side-card" id="chart"><h3>◷ GAME TIMINGS</h3>{defaultTimes.map((time, i) => <div className="timing" key={time}><span>Bazi {i + 1}</span><b>{time}</b></div>)}</div><div className="side-card responsible"><div className="side-crown">♛</div><div><h3>INFORMATION ONLY</h3><p>Results are provided for informational purposes.</p></div></div></aside>
       <main className="main-column">

@@ -4,6 +4,10 @@ android {
     namespace 'com.matkakingfatafat.app'
     compileSdk 35
 
+    buildFeatures {
+        buildConfig true
+    }
+
     defaultConfig {
         applicationId 'com.matkakingfatafat.app'
         minSdk 23

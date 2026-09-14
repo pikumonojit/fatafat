@@ -31,4 +31,8 @@ android {
             buildConfigField 'String', 'SITE_URL', '"https://matkakingfatafat-bice.vercel.app/admin"'
         }
     }
+
+    dependencies {
+        implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    }
 }

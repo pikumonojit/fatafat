@@ -27,7 +27,7 @@ const pattiRows = [
   ['227','138','788','338','249','556','449','378','289','569'],
   ['344','156','445','257','339','259','269','440','388','677'],
   ['335','110','229','220','889','349','133','279','577','136'],
-  ['128','569','779','770','348','457','188','468','568','244']
+  ['128','589','779','770','348','457','188','468','568','244']
 ]
 
 function formatDate(date) { return new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(`${date}T00:00:00+05:30`)) }
@@ -63,7 +63,7 @@ function PattiList() {
 }
 
 export default async function Home() {
-  const { data: results, error } = await supabase.from('results').select('id,result_date,round_number,round_name,result_time,result,status').eq('status', 'published').order('result_date', { ascending: false }).order('round_number')
+  const { data: results, error } = await supabase.from('results').select('id,result_date,round_number,round_name,result,result_time,result,status').eq('status', 'published').order('result_date', { ascending: false }).order('round_number')
   const grouped = groupByDate(results || [])
   const today = indiaToday()
   const dates = Object.keys(grouped).filter((d) => d <= today)

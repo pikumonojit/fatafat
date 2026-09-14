@@ -11,6 +11,9 @@ export const metadata = {
     follow: true,
     googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 }
   },
+  verification: {
+    google: 'aL6L5udIMnLorV_8JEstHoaVGllvtf8tGGU7Y3vpL2A'
+  },
   openGraph: {
     title: 'Matka King Fatafat – Daily Results & Game Timing',
     description: 'Daily published results, historical results and game timing information.',

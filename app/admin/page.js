@@ -5,7 +5,6 @@ import { createClient } from '@supabase/supabase-js'
 
 const supabase = createClient('https://pselksqspkulqkfrnioi.supabase.co', process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY)
 const defaultTimes = ['10:30 AM','12:00 PM','01:30 PM','03:00 PM','04:30 PM','06:00 PM','07:30 PM','09:00 PM']
-
 const rounds = [
   { number: 1, name: 'Morning' }, { number: 2, name: 'Noon' }, { number: 3, name: 'Afternoon' }, { number: 4, name: 'Evening' },
   { number: 5, name: 'Night' }, { number: 6, name: 'Late Night' }, { number: 7, name: 'Special 1' }, { number: 8, name: 'Special 2' },
@@ -35,7 +34,7 @@ export default function AdminPage() {
   async function login(e) {
     e.preventDefault(); setLoading(true); setMessage('')
     const { error } = await supabase.auth.signInWithPassword({ email, password })
-    setLoading(false); setMessage(error ? error.message : 'Logged in.')
+    setLoading(false); setMessage(error ? error.message : 'Logged in successfully.')
   }
 
   async function publish() {
@@ -48,8 +47,57 @@ export default function AdminPage() {
   }
 
   async function logout() { await supabase.auth.signOut(); setSession(null) }
+  const filled = rows.filter(r => r.result.trim()).length
 
-  if (!session) return <main className="page"><section className="card admin-login"><h1>Admin Login</h1><p className="muted">Sign in to publish informational daily results.</p><form onSubmit={login} className="admin-form"><input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required /><input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required /><button type="submit" disabled={loading}>{loading ? 'Signing in…' : 'Sign in'}</button></form>{message && <p className="status">{message}</p>}</section></main>
+  if (!session) return (
+    <main className="admin-shell admin-auth-shell">
+      <section className="admin-auth-card">
+        <div className="admin-logo"><span>♛</span><div><strong>MATKA KING <i>FATAFAT</i></strong><small>ADMINISTRATION</small></div></div>
+        <div className="admin-auth-icon">🔐</div>
+        <h1>Welcome Back</h1>
+        <p>Sign in to manage and publish daily informational results.</p>
+        <form onSubmit={login} className="admin-auth-form">
+          <label>Email Address<input type="email" placeholder="admin@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required /></label>
+          <label>Password<input type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} required /></label>
+          <button type="submit" disabled={loading}>{loading ? 'Signing in…' : 'Sign In to Dashboard →'}</button>
+        </form>
+        {message && <div className="admin-alert">{message}</div>}
+        <div className="admin-auth-foot">🔒 Secure Supabase authentication</div>
+      </section>
+    </main>
+  )
 
-  return <main className="page"><header><div className="brand">MATKA KING <span>FATAFAT</span></div><nav><a href="/">Public Site</a><button className="link-button" onClick={logout}>Logout</button></nav></header><section className="hero"><p>ADMIN PANEL</p><h1>Publish Daily Results</h1><div className="date">Informational results only — no betting or wagering.</div></section><section className="card"><div className="cardhead"><h2>Results</h2><input type="date" value={date} onChange={(e) => setDate(e.target.value)} /></div><div className="admin-grid">{rows.map((row, i) => <div className="admin-row" key={row.number}><div><b>{row.name}</b><small>Round {row.number}</small></div><input placeholder="3-digit Patti" inputMode="numeric" maxLength={3} value={row.result} onChange={(e) => setRows(rows.map((x, j) => j === i ? { ...x, result: e.target.value.replace(/\D/g, '').slice(0, 3) } : x))} /><div className="single-preview"><small>Single Digit</small><strong>{pattiSingleDigit(row.result) || '—'}</strong></div><input placeholder="Time" value={row.result_time} onChange={(e) => setRows(rows.map((x, j) => j === i ? { ...x, result_time: e.target.value } : x))} /></div>)}</div><p className="muted">Schedule: 10:30 AM, then every 1 hour 30 minutes through Bazi 8 at 09:00 PM.</p><button className="publish-button" onClick={publish} disabled={loading}>{loading ? 'Publishing…' : 'Publish Results'}</button>{message && <p className="status">{message}</p>}</section></main>
+  return (
+    <main className="admin-shell">
+      <header className="admin-topbar">
+        <a href="/" className="admin-brand"><span>♛</span><div><strong>MATKA KING <i>FATAFAT</i></strong><small>ADMIN PANEL</small></div></a>
+        <div className="admin-actions"><a href="/">↗ Public Site</a><button onClick={logout}>⇥ Logout</button></div>
+      </header>
+      <section className="admin-welcome">
+        <div><span className="admin-kicker">DASHBOARD</span><h1>Publish Daily Results</h1><p>Manage your daily result entries from one simple dashboard.</p></div>
+        <div className="admin-secure">● SECURE ADMIN AREA</div>
+      </section>
+      <section className="admin-content">
+        <div className="admin-stats">
+          <div><span>📅</span><div><small>SELECTED DATE</small><b>{date}</b></div></div>
+          <div><span>✓</span><div><small>ROUNDS ENTERED</small><b>{filled} / 8</b></div></div>
+          <div><span>ℹ</span><div><small>MODE</small><b>Informational Only</b></div></div>
+        </div>
+        <section className="admin-card">
+          <div className="admin-card-head"><div><span>DAILY RESULTS</span><h2>Result Management</h2></div><label>Result Date<input type="date" value={date} onChange={(e) => setDate(e.target.value)} /></label></div>
+          <div className="admin-table-head"><span>ROUND</span><span>PATTI RESULT</span><span>SINGLE DIGIT</span><span>TIME</span></div>
+          <div className="admin-rounds">
+            {rows.map((row, i) => <div className="admin-round" key={row.number}>
+              <div className="round-name"><b>{String(row.number).padStart(2,'0')}</b><div><strong>{row.name}</strong><small>Round {row.number}</small></div></div>
+              <input className="result-input" aria-label={`${row.name} result`} placeholder="000" inputMode="numeric" maxLength={3} value={row.result} onChange={(e) => setRows(rows.map((x, j) => j === i ? { ...x, result: e.target.value.replace(/\D/g, '').slice(0, 3) } : x))} />
+              <div className="digit-box">{pattiSingleDigit(row.result) || '—'}</div>
+              <input className="time-input" aria-label={`${row.name} time`} value={row.result_time} onChange={(e) => setRows(rows.map((x, j) => j === i ? { ...x, result_time: e.target.value } : x))} />
+            </div>)}
+          </div>
+          <div className="admin-card-foot"><p>ℹ Results are published for informational purposes only. No betting, wagering, deposits or payment services are provided.</p><button className="publish-button" onClick={publish} disabled={loading}>{loading ? 'Publishing…' : '✓ Publish Results'}</button></div>
+          {message && <div className="admin-alert">{message}</div>}
+        </section>
+      </section>
+    </main>
+  )
 }

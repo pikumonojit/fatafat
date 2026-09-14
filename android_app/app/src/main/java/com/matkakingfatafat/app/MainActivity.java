@@ -9,7 +9,6 @@ import android.webkit.WebViewClient;
 
 public class MainActivity extends Activity {
     private WebView webView;
-    private static final String SITE_URL = "https://matkakingfatafat-bice.vercel.app/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +29,7 @@ public class MainActivity extends Activity {
 
         webView.setWebViewClient(new WebViewClient());
         webView.setWebChromeClient(new WebChromeClient());
-        webView.loadUrl(SITE_URL);
+        webView.loadUrl(BuildConfig.SITE_URL);
     }
 
     @Override

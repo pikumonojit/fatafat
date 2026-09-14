@@ -1,5 +1,30 @@
 plugins { id 'com.android.application' }
 
-android { namespace 'com.matkakingfatafat.app'; compileSdk 35
-    defaultConfig { applicationId 'com.matkakingfatafat.app'; minSdk 23; targetSdk 35; versionCode 1; versionName '1.0' }
+android {
+    namespace 'com.matkakingfatafat.app'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.matkakingfatafat.app'
+        minSdk 23
+        targetSdk 35
+        versionCode 1
+        versionName '1.0'
+    }
+
+    flavorDimensions += 'app'
+    productFlavors {
+        publicApp {
+            dimension 'app'
+            applicationIdSuffix '.public'
+            versionNameSuffix '-public'
+            buildConfigField 'String', 'SITE_URL', '"https://matkakingfatafat-bice.vercel.app/"'
+        }
+        adminApp {
+            dimension 'app'
+            applicationIdSuffix '.admin'
+            versionNameSuffix '-admin'
+            buildConfigField 'String', 'SITE_URL', '"https://matkakingfatafat-bice.vercel.app/admin"'
+        }
+    }
 }
